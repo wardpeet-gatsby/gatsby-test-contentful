@@ -10,16 +10,21 @@ const { fetchRemoteFile } = require('gatsby-core-utils')
 const {
   getGatsbyImageFieldConfig,
 } = require('gatsby-plugin-image/graphql-utils')
+const v8 = require('v8')
 
-const imageMapper = new Map()
+let imageMapper = {}
 
 const client = new ImgixClient({
   domain: 'gatsby-cloud.imgix.net',
   secureURLToken: 'WAbYXcycj8S94VJ8',
 })
 
+exports.onPluginInit = async ({ cache }) => {
+  imageMapper = JSON.parse((await cache.get('imageMapper')) ?? '{}')
+}
+
 /** @type {import('gatsby').GatsbyNode["createResolvers"]} */
-exports.createResolvers = ({ createResolvers, reporter, cache }) => {
+exports.createResolvers = async ({ createResolvers, reporter, cache }) => {
   const resolvers = {
     ContentfulAsset: {
       gatsbyImageData: {
@@ -27,7 +32,7 @@ exports.createResolvers = ({ createResolvers, reporter, cache }) => {
           const item = await context.nodeModel.findOne({
             type: `RemoteFile`,
             query: {
-              filter: { id: { eq: imageMapper.get(source.id) } },
+              filter: { id: { eq: imageMapper[source.id] } },
             },
           })
 
@@ -46,6 +51,7 @@ exports.onCreateNode = ({
   actions,
   createContentDigest,
   createNodeId,
+  cache,
 }) => {
   if (node.internal.type === 'ContentfulAsset') {
     const id = createRemoteFileNode(
@@ -64,7 +70,7 @@ exports.onCreateNode = ({
       }
     )
 
-    imageMapper.set(node.id, id)
+    imageMapper[node.id] = id
   }
 
   if (node.internal.type === 'WpMediaItem') {
@@ -84,8 +90,10 @@ exports.onCreateNode = ({
       }
     )
 
-    imageMapper.set(node.id, id)
+    imageMapper[node.id] = id
   }
+
+  cache.set('imageMapper', JSON.stringify(imageMapper))
 }
 
 /** @type {import('gatsby').GatsbyNode["createSchemaCustomization"]} */
