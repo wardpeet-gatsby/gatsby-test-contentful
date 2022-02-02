@@ -1,7 +1,22 @@
 const path = require('path')
+const graphql = require('gatsby/graphql')
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
+/**
+ * @type {import('gatsby').GatsbyNode['onPreInit']}
+ */
+exports.onPreInit = ({ actions }) => {
+  // actions.toggleFeature('imageService', true)
+}
+
+exports.createPages = async ({
+  graphql,
+  actions,
+  reporter,
+  isFeatureEnabled,
+}) => {
   const { createPage } = actions
+
+  console.log(isFeatureEnabled('imageService'))
 
   // Define a template for blog post
   const blogPost = path.resolve('./src/templates/blog-post.js')
@@ -47,6 +62,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           previousPostSlug,
           nextPostSlug,
         },
+        defer: false,
       })
     })
   }

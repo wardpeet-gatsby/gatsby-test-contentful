@@ -32,6 +32,6 @@ module.exports = {
       resolve: 'gatsby-source-contentful',
       options: contentfulConfig,
     },
-    'gatsby-remote-images',
+    // 'gatsby-remote-images',
   ],
 }
