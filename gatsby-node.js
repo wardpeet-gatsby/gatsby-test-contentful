@@ -1,22 +1,8 @@
 const path = require('path')
 const graphql = require('gatsby/graphql')
 
-/**
- * @type {import('gatsby').GatsbyNode['onPreInit']}
- */
-exports.onPreInit = ({ actions }) => {
-  // actions.toggleFeature('imageService', true)
-}
-
-exports.createPages = async ({
-  graphql,
-  actions,
-  reporter,
-  isFeatureEnabled,
-}) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
-
-  console.log(isFeatureEnabled('imageService'))
 
   // Define a template for blog post
   const blogPost = path.resolve('./src/templates/blog-post.js')
