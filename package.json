@@ -10,6 +10,7 @@
   "dependencies": {
     "@imgix/js-core": "^3.2.1",
     "gatsby": "4.7.0-alpha-image-service.14",
+    "gatsby-plugin-gatsby-cloud": "^4.7.0",
     "gatsby-plugin-image": "^2.1.2",
     "gatsby-plugin-react-helmet": "^5.1.0",
     "gatsby-plugin-sharp": "^4.1.3",
