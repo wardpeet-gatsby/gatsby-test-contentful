@@ -1,8 +1,0 @@
-{
-  "name": "gatsby-remote-images",
-  "version": "1.0.0",
-  "main": "index.js",
-  "dependencies": {
-    "@imgix/js-core": "^3.2.1"
-  }
-}

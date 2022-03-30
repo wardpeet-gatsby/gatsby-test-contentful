@@ -21,7 +21,7 @@ class BlogPostTemplate extends React.Component {
           description={post.description.childMarkdownRemark.excerpt}
         />
         <Hero
-          image={post.heroImage.gatsbyImageData}
+          image={post.heroImage.gatsbyImage}
           title={post.title}
           content={post.description.childMarkdownRemark.excerpt}
         />
@@ -83,7 +83,7 @@ export const pageQuery = graphql`
       publishDate(formatString: "MMMM Do, YYYY")
       rawDate: publishDate
       heroImage {
-        gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 1280)
+        gatsbyImage(layout: FULL_WIDTH, placeholder: BLURRED, width: 1280)
       }
       body {
         childMarkdownRemark {
